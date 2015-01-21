@@ -1,0 +1,130 @@
+#N canvas 57 63 1070 738 12;
+#X obj 362 377 env~ 8192;
+#X floatatom 362 400 5 0 0 0 - - -, f 5;
+#X floatatom 436 205 5 0 200 0 - - -, f 5;
+#X obj 107 330 env~ 8192;
+#X floatatom 107 353 5 0 0 0 - - -, f 5;
+#X obj 293 344 bob~;
+#X obj 436 227 / 25;
+#X msg 436 252 resonance \$1;
+#X msg 1000 242 print;
+#X obj 125 237 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 85 235 *~;
+#X obj 161 208 min~;
+#X obj 205 184 -~ 1;
+#X obj 205 209 *~ -50;
+#X floatatom 85 103 5 0 0 0 - - -, f 5;
+#X obj 85 125 mtof;
+#X obj 202 236 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 162 234 *~;
+#X obj 85 260 +~;
+#X obj 38 330 output~;
+#X floatatom 310 155 5 0 150 0 - - -, f 5;
+#X obj 310 177 mtof;
+#X obj 311 222 pack 0 50;
+#X obj 311 247 line~;
+#X msg 945 242 clear;
+#X obj 292 377 output~;
+#X floatatom 310 200 7 0 0 0 - - -, f 7;
+#X floatatom 790 188 5 0 999 0 - - -, f 5;
+#X msg 790 234 saturation \$1;
+#X obj 789 104 loadbang;
+#X text 85 78 test signal;
+#X text 132 103 pitch;
+#X text 202 253 sawtooth;
+#X text 202 268 on/off;
+#X text 26 242 on/off;
+#X text 29 227 sine;
+#X text 37 386 monitor input;
+#X text 296 434 output level;
+#X obj 790 210 / 100;
+#X text 944 198 clear or print;
+#X text 948 217 filter state;
+#X text 202 19 Runge-Kutte numerical simulation of the Moog resonant
+filter;
+#X floatatom 654 200 5 1 10 0 - - -, f 5;
+#X text 640 108 oversampling;
+#X msg 654 227 oversample \$1;
+#X text 432 116 "resonance";
+#X text 431 133 (>4 to oscillate);
+#X obj 654 148 loadbang;
+#X msg 654 173 2;
+#X text 484 223 scaled to 0-8;
+#X text 483 205 0-200 control;
+#X text 307 105 resonant or cutoff frequency, f 12;
+#X text 318 71 ----- filter parameters ----;
+#X text 627 70 ------ optimizations / setup params -------;
+#X text 958 176 debugging:;
+#X text 36 487 The two audio inputs are the signal to filter and the
+cutoff/resonant frequency in cycles per second. A resonance parameter
+(message \, not signal) controls the sharpness of teh filter. Nominally
+\, a resonance of 4 should be the limit of stability -- above that
+\, the filter oscillates.;
+#X text 552 468 By default bob~ does one step of 4th-order Runge-Kutte
+integration per audio sample. This works OK for resonant/cutoff frequencies
+up to about 1/2 Nyquist. To improve accuracy and/or to extend the range
+of the filter to higher cutoff frequencies you can oversample by any
+factor - but note that computation time rises accordingly. At high
+cutoff frequencies/resonance values the RK approximation can go unstable.
+You can combat this by raising teh oversampling.;
+#X text 800 148 saturation point;
+#X text 797 165 of "transistors";
+#X msg 789 129 300;
+#X obj 437 153 loadbang;
+#X msg 436 179 10;
+#X text 464 376 To get output \, set test signal pitch \, sawtooth
+on/off \, resonant frequency \, and output level., f 37;
+#X obj 160 151 phasor~ 220;
+#X obj 85 210 osc~ 220;
+#X text 546 664 "Clear" momentarily shorts out the capacitors in case
+the filter has gone unstable and stopped working.;
+#X text 546 624 The "saturation" parameter controls at what signal
+level the "transistors" in the model saturate.;
+#X text 41 592 The design borrows from papers by Tim Stilson \, Timothy
+E. Stinchcombe \, and Antti Huovilainen \; see README.txt for pointers.
+;
+#X connect 0 0 1 0;
+#X connect 2 0 6 0;
+#X connect 3 0 4 0;
+#X connect 5 0 0 0;
+#X connect 5 0 25 0;
+#X connect 5 0 25 1;
+#X connect 6 0 7 0;
+#X connect 7 0 5 0;
+#X connect 8 0 5 0;
+#X connect 9 0 10 1;
+#X connect 10 0 18 0;
+#X connect 11 0 17 0;
+#X connect 12 0 13 0;
+#X connect 13 0 11 1;
+#X connect 14 0 15 0;
+#X connect 15 0 63 0;
+#X connect 15 0 64 0;
+#X connect 16 0 17 1;
+#X connect 17 0 18 1;
+#X connect 18 0 5 0;
+#X connect 18 0 3 0;
+#X connect 18 0 19 0;
+#X connect 18 0 19 1;
+#X connect 20 0 21 0;
+#X connect 21 0 26 0;
+#X connect 22 0 23 0;
+#X connect 23 0 5 1;
+#X connect 24 0 5 0;
+#X connect 26 0 22 0;
+#X connect 27 0 38 0;
+#X connect 28 0 5 0;
+#X connect 29 0 59 0;
+#X connect 38 0 28 0;
+#X connect 42 0 44 0;
+#X connect 44 0 5 0;
+#X connect 47 0 48 0;
+#X connect 48 0 42 0;
+#X connect 59 0 27 0;
+#X connect 60 0 61 0;
+#X connect 61 0 2 0;
+#X connect 63 0 11 0;
+#X connect 63 0 12 0;
+#X connect 64 0 10 0;
