@@ -1,3 +1,7 @@
+***This code is entirely by Miller Puckette with the exception of a few modifications 
+to the file makefile.include. The reason for this hosting is to have a copy of the extern
+that is compiled for windows.***
+
 The bob~ object.  BSD licensed; Copyright notice is in bob~ source code.
 
 Imitates a Moog resonant filter by Runge-Kutte numerical integration of
